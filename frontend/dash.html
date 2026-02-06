@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CivicAdmin Dashboard</title>
+  <link rel="stylesheet" href="dash.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar">
+    <h2 class="logo">CityConnect</h2>
+    
+
+    <nav>
+      <a class="active">📊 Dashboard</a>
+      <a>📄 Reports</a>
+      <a>👥 Citizens</a>
+      <a>🗺 District Map</a>
+
+      <p class="menu-title">MANAGEMENT</p>
+      <a>👮 Admins</a>
+      <a>⚙ Settings</a>
+    </nav>
+
+    <div class="profile">
+      <img src="https://i.pravatar.cc/40">
+      <div>
+        <strong>Sarah Jenkins</strong>
+        <small>Senior Admin</small>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <h1>Admin Management Overview</h1>
+      <div class="top-actions">
+        <input type="text" placeholder="Search report ID, tag, or address">
+        🔔 ❓
+      </div>
+    </header>
+
+    <!-- STATS -->
+    <section class="stats">
+      <div class="stat">
+        <p>Total Active Issues</p>
+        <h2>1,284 <span class="green">+12%</span></h2>
+      </div>
+      <div class="stat">
+        <p>High Priority</p>
+        <h2>42 <span class="red">+5%</span></h2>
+      </div>
+      <div class="stat">
+        <p>Resolved Today</p>
+        <h2>896 <span class="green">+24%</span></h2>
+      </div>
+    </section>
+
+    <!-- REPORT TABLE -->
+    <section class="card">
+      <h3>Recent Reports</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Issue</th>
+            <th>Location</th>
+            <th>Urgency</th>
+            <th>Status</th>
+            <th>Reported</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td class="issue">
+              <img src="leakstreet.jpg">
+              <div>
+                <strong>Main Street Water Leak</strong>
+                <small>ID: #REP-8821</small>
+              </div>
+            </td>
+            <td>452 Main St, Downtown</td>
+            <td><span class="tag critical">CRITICAL</span></td>
+            <td>Unassigned</td>
+            <td>12 mins ago</td>
+            <td><button>Assign</button></td>
+          </tr>
+
+          <tr>
+            <td class="issue">
+              <img src="lamp.jpg">
+              <div>
+                <strong>Damaged Street Lamp</strong>
+                <small>ID: #REP-8819</small>
+              </div>
+            </td>
+            <td>88 Park Lane</td>
+            <td><span class="tag high">HIGH</span></td>
+            <td>In Progress</td>
+            <td>45 mins ago</td>
+            <td><button>Update</button></td>
+          </tr>
+
+          <tr>
+            <td class="issue">
+              <img src="OIP.jpg">
+              <div>
+                <strong>Graffiti – Library</strong>
+                <small>ID: #REP-8815</small>
+              </div>
+            </td>
+            <td>Central Plaza</td>
+            <td><span class="tag medium">MEDIUM</span></td>
+            <td>Unassigned</td>
+            <td>2 hours ago</td>
+            <td><button>Assign</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- MAP + ACTIVITY -->
+    <section class="bottom">
+      <div class="card">
+        <h3>Issue Hotspots</h3>
+        <iframe
+          src="https://maps.google.com/maps?q=Chicago&z=11&output=embed">
+        </iframe>
+      </div>
+
+      <div class="card">
+        <h3>Admin Activity</h3>
+        <ul class="activity">
+          <li>🟢 Crew dispatched – Water Dept</li>
+          <li>🔵 Status changed to Resolved</li>
+          <li>🔴 New Critical Report received</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>
