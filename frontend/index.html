@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CityConnect Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-left">
+    <div class="logo">CityConnect</div>
+    <ul class="nav-links">
+      <li>Home</li>
+      <li>My Reports</li>
+      <li>Community Map</li>
+      <li>Local Resources</li>
+    </ul>
+  </div>
+
+  <div class="nav-right">
+    <input type="text" placeholder="Search reports or areas">
+    <div class="icon">🔔</div>
+    <div class="icon">👤</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <h1>Hi peeps, welcome back.</h1>
+    <p>Your feedback helps make our city a better place for everyone.</p>
+
+    <div class="hero-buttons">
+      <button class="primary">+ Report an Issue</button>
+      <button class="secondary">View Nearby Map</button>
+    </div>
+  </div>
+
+  <!-- IMAGE SECTION (WORKING) -->
+  <div class="hero-image">
+    <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+         alt="City Image">
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="card">
+    <h4>Total Reports</h4>
+    <h2>24</h2>
+    <span class="green-text">+3 this month</span>
+  </div>
+
+  <div class="card">
+    <h4>In Progress</h4>
+    <h2>5</h2>
+    <span>Average response: 48h</span>
+  </div>
+
+  <div class="card">
+    <h4>Resolved</h4>
+    <h2>19</h2>
+    <span>Community impact: 94%</span>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<section class="content">
+  <div class="reports">
+    <h3>Recent Reports</h3>
+
+    <div class="report">
+      <div>
+        <strong>Pothole on Maple Ave</strong>
+        <p>Reported Oct 24, 2025 · Case #8821</p>
+      </div>
+      <span class="badge blue">In Progress</span>
+    </div>
+
+    <div class="report">
+      <div>
+        <strong>Broken Streetlight - Park Lane</strong>
+        <p>Reported Dec 22, 2025 · Case #8795</p>
+      </div>
+      <span class="badge orange">Pending</span>
+    </div>
+
+    <div class="report">
+      <div>
+        <strong>Missed Waste Collection</strong>
+        <p>Reported jan 18, 2025 · Case #8642</p>
+      </div>
+      <span class="badge green">Resolved</span>
+    </div>
+  </div>
+
+  <!-- LIVE MAP -->
+  <div class="map">
+    <h3>Live Status Map</h3>
+    <div class="map-box" id="map">
+      Loading map...
+    </div>
+  </div>
+</section>
+
+<footer>
+  CityConnect v2.4 · © 2023 Municipal Digital Services
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
