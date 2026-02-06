@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CivicReport – Review</title>
+  <link rel="stylesheet" href="review.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-left">
+    <span class="logo">CityConnect</span>
+    <nav class="nav-links">
+      <a href="#">Dashboard</a>
+      <a href="#">My Reports</a>
+      <a href="#">Map View</a>
+      <a href="#">Resources</a>
+    </nav>
+  </div>
+  <div class="nav-right">🔔 👤</div>
+</header>
+
+<main class="page">
+  <p class="breadcrumb">Home / New Report / Review & Submit</p>
+
+  <h1>Review Your Report</h1>
+  <p class="desc">
+    Our AI has analyzed your photo and suggested preliminary details.
+    Please verify before submitting.
+  </p>
+
+  <div class="layout">
+
+    <!-- LEFT -->
+    <section class="left">
+      <div class="image-card">
+        <span class="tag">CAPTURED</span>
+
+        <!-- IMAGE -->
+        <img src="brokenroad" alt="Pothole">
+
+        <button class="retake">📷 Retake</button>
+      </div>
+
+      <div class="card">
+        <h3>Additional Context</h3>
+        <textarea placeholder="Tell us more about the issue..."></textarea>
+      </div>
+    </section>
+
+    <!-- RIGHT -->
+    <aside class="right">
+
+      <div class="card">
+        <h3>Detected Details</h3>
+        <p class="label">Category Suggestion</p>
+        <div class="info-box">
+          Road Damage / Pothole<br>
+          <small>98% confidence matching</small>
+        </div>
+      </div>
+
+      <div class="card priority">
+        <p class="label">Suggested Priority</p>
+        <div class="high">⚠ High Priority</div>
+        <small>Potential safety hazard detected</small>
+      </div>
+
+      <div class="card">
+        <p class="label">GPS Location</p>
+        <iframe
+          src="https://maps.google.com/maps?q=Connaught%20Place%20Delhi&z=14&output=embed">
+        </iframe>
+        <p class="address">📍 Connaught Place, New Delhi</p>
+      </div>
+
+      <button class="submit">Submit Complaint</button>
+      <button class="draft">Save as Draft</button>
+    </aside>
+
+  </div>
+</main>
+
+</body>
+</html>
