@@ -1,9 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const issueRoutes = require("./routes/issueRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 
-require("dotenv").config();
+
 const connectDB = require("./config/db");
 connectDB();
 
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 
 // Port
 const PORT = process.env.PORT || 5000;
+
 
 // Start server
 app.listen(PORT, () => {
