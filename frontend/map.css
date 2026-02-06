@@ -1,0 +1,158 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f4f6f8;
+}
+
+/* TOP NAV */
+.top-nav {
+  height: 60px;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.nav-left a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #333;
+}
+
+.nav-left .active {
+  color: #2563eb;
+  font-weight: bold;
+}
+
+.logo {
+  font-weight: bold;
+  color: #2563eb;
+}
+
+.nav-right input {
+  padding: 6px 10px;
+  margin-right: 10px;
+}
+
+/* LAYOUT */
+.container {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+/* FILTERS */
+/* FILTER PANEL FIX */
+.filters {
+  width: 280px;
+  background: #fff;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+}
+
+/* category buttons */
+.filters button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border: none;
+  background: #f1f5f9;
+  cursor: pointer;
+  border-radius: 8px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.filters button.active {
+  background: #2563eb;
+  color: white;
+  font-weight: bold;
+}
+
+/* count badge */
+.count {
+  float: right;
+  background: rgba(255,255,255,0.2);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+/* status pills */
+.status span {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  margin: 6px 6px 0 0;
+  font-size: 13px;
+}
+
+.status .active {
+  background: #2563eb;
+  color: white;
+  border: none;
+}
+
+/* PUSH UPDATE BUTTON DOWN */
+.bottom-btn {
+  margin-top: auto;
+}
+
+/* BLUE HIGHLIGHT BUTTON */
+.update {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.update:hover {
+  background: #1d4ed8;
+}
+
+
+/* MAP */
+.map-area {
+  flex: 1;
+  position: relative;
+}
+
+.map-controls {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 999;
+}
+
+.map-controls button {
+  padding: 8px 14px;
+  border: none;
+  margin-right: 10px;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.map-controls .active {
+  background: #2563eb;
+  color: white;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
