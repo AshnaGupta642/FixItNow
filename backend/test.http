@@ -1,0 +1,11 @@
+POST http://localhost:5000/api/issues/create
+Content-Type: application/json
+
+{
+  "issueType": "garbage",
+  "latitude": 28.61,
+  "longitude": 77.20,
+  "street": "Karol Bagh",
+  "ward": "KB-1",
+  "city": "Delhi"
+}
