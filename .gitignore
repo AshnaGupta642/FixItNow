@@ -1,5 +1,19 @@
-**/venv/
-.venv/
+# AI / ML models
+*.pt
+*.h5
+*.onnx
+
+# Python
 __pycache__/
 *.pyc
-.keras/
+.env
+.venv/
+
+# Node
+node_modules/
+
+# Outputs
+output.jpg
+
+# OS files
+.DS_Store
