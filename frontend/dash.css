@@ -1,0 +1,164 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f4f6f8;
+}
+
+.app {
+  display: flex;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 260px;
+  background: #fff;
+  padding: 20px;
+  height: 100vh;
+  border-right: 1px solid #ddd;
+}
+
+.logo {
+  color: #2563eb;
+}
+
+.sub {
+  font-size: 12px;
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.sidebar nav a {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+  border-radius: 6px;
+  margin-bottom: 5px;
+}
+
+.sidebar nav a.active,
+.sidebar nav a:hover {
+  background: #e8efff;
+  color: #2563eb;
+}
+
+.menu-title {
+  margin: 15px 0 5px;
+  font-size: 12px;
+  color: gray;
+}
+
+.profile {
+  display: flex;
+  gap: 10px;
+  margin-top: 40px;
+  align-items: center;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 25px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.topbar input {
+  padding: 8px;
+  width: 280px;
+}
+
+/* STATS */
+.stats {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.stat {
+  background: #fff;
+  padding: 20px;
+  flex: 1;
+  border-radius: 10px;
+}
+
+.green { color: green; }
+.red { color: red; }
+
+/* CARD */
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.issue {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.issue img {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.tag {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.critical { background: #fee2e2; color: red; }
+.high { background: #ffedd5; color: orange; }
+.medium { background: #e5e7eb; }
+
+/* BUTTON */
+button {
+  padding: 6px 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* BOTTOM */
+.bottom {
+  display: flex;
+  gap: 20px;
+}
+
+iframe {
+  width: 100%;
+  height: 220px;
+  border: none;
+}
+
+.activity li {
+  margin-bottom: 10px;
+}
