@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CityConnect – Map View</title>
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <link rel="stylesheet" href="map.css">
+</head>
+<body>
+
+<!-- ================= TOP NAVBAR ================= -->
+<header class="top-nav">
+  <div class="nav-left">
+    <span class="logo">🛡 CivicAdmin</span>
+    <a>Dashboard</a>
+    <a class="active">Map View</a>
+    <a>Reports</a>
+    <a>User Activity</a>
+  </div>
+
+  <div class="nav-right">
+    <input type="text" placeholder="Search Incident ID or Address">
+    🔔 ⚙ 👤
+  </div>
+</header>
+
+<!-- ================= MAIN ================= -->
+<div class="container">
+<!-- LEFT FILTER PANEL -->
+<aside class="filters">
+  <h3>Issue Filters</h3>
+  <p class="sub">Manage the live map view</p>
+
+  <h4>Category</h4>
+
+  <button class="active">
+    📋 All Reports <span class="count">142</span>
+  </button>
+
+  <button>🚧 Road & Potholes</button>
+  <button>🗑 Waste Management</button>
+  <button>💡 Street Lighting</button>
+  <button>💧 Water Leakage</button>
+
+  <h4>Status</h4>
+  <div class="status">
+    <span>Open</span>
+    <span class="active">In Progress</span>
+    <span>Resolved</span>
+  </div>
+
+  <h4>Timeframe</h4>
+  <select>
+    <option>Last 24 Hours</option>
+    <option>Last 7 Days</option>
+  </select>
+
+  <!-- PUSH BUTTON TO BOTTOM -->
+  <div class="bottom-btn">
+    <button class="update">
+      🔄 Update Map View
+    </button>
+  </div>
+</aside>
+
+
+  <!-- MAP -->
+  <section class="map-area">
+    <div class="map-controls">
+      <button class="active">📍 Issue Pins</button>
+      <button>🔥 Heatmap</button>
+    </div>
+
+    <div id="map"></div>
+  </section>
+
+</div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
