@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -8,13 +8,13 @@
 <body>
 
 <!-- NAVBAR -->
-<header class="navbar">
+<!-- <header class="navbar">
   <div class="nav-left">
     <div class="logo">CityConnect</div>
     <nav>
-      <a href="index.html">Home</a>
+      <a href="#">Dashboard</a>
       <a href="#" class="active">My Reports</a>
-      <a href="map.html">Map</a>
+      <a href="#">Map</a>
     </nav>
   </div>
 
@@ -29,7 +29,7 @@
 
   <p class="breadcrumb">Home / My Reports / <b>Report #CN-8902</b></p>
 
-  <!-- HEADER -->
+  HEADER
   <div class="header-card">
     <div>
       <h1>
@@ -45,11 +45,11 @@
     </div>
   </div>
 
-  <!-- MAIN GRID -->
-  <div class="grid">
+  MAIN GRID -->
+  <!-- <div class="grid">
 
     <!-- LEFT -->
-    <section>
+    <!-- <section>
 
       <div class="card">
         <h3>Resolution Timeline</h3>
@@ -96,7 +96,7 @@
     </section>
 
     <!-- RIGHT -->
-    <aside>
+    <!-- <aside>
 
       <div class="card">
         <h4>Original Evidence</h4>
@@ -129,5 +129,88 @@
 <footer>CityResolve © 2023</footer>
 <script src="report.js"></script>
 
+</body>
+</html> --> --> --> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CityResolve – Report</title>
+  <link rel="stylesheet" href="report.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-left">
+    <div class="logo">CityConnect</div>
+    <nav>
+      <a href="#">Dashboard</a>
+      <a href="#" class="active">My Reports</a>
+      <a href="#">Map</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <p class="breadcrumb">Home / My Reports / <b id="trackId">-</b></p>
+
+  <!-- HEADER -->
+  <div class="header-card">
+    <div>
+      <h1>
+        <span id="title">Loading...</span>
+        <span class="status" id="headerStatus">-</span>
+      </h1>
+      <p class="sub" id="category">-</p>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="grid">
+
+    <!-- LEFT -->
+    <section>
+
+      <div class="card">
+        <h3>Resolution Timeline</h3>
+
+        <!-- ❌ NO STATIC STEPS -->
+        <!-- ✅ JS WILL FILL THIS -->
+        <div class="timeline" id="timeline"></div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT -->
+    <aside>
+
+      <div class="card">
+        <h4>Original Evidence</h4>
+        <img id="evidenceImg" class="img" />
+      </div>
+
+      <div class="card">
+        <h4>Location</h4>
+        <iframe id="mapFrame"></iframe>
+        <p class="small" id="address">-</p>
+      </div>
+
+      <div class="summary">
+        <h3>Report Summary</h3>
+        <div><span>Tracking ID</span><b id="sumTrack">-</b></div>
+        <div><span>Priority</span><b id="priority">-</b></div>
+        <div><span>Status</span><b id="status">-</b></div>
+      </div>
+
+    </aside>
+
+  </div>
+</main>
+
+<footer>CityResolve © 2023</footer>
+
+<!-- ✅ JS AT END -->
+<script src="report.js"></script>
 </body>
 </html>
