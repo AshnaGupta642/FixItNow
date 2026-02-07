@@ -1,0 +1,216 @@
+ <!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CityResolve – Report</title>
+  <link rel="stylesheet" href="report.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<!-- <header class="navbar">
+  <div class="nav-left">
+    <div class="logo">CityConnect</div>
+    <nav>
+      <a href="#">Dashboard</a>
+      <a href="#" class="active">My Reports</a>
+      <a href="#">Map</a>
+    </nav>
+  </div>
+
+  <div class="nav-right">
+    <input type="text" placeholder="Search reports...">
+    <span>🔔</span>
+    <span>👤</span>
+  </div>
+</header>
+
+<main class="container">
+
+  <p class="breadcrumb">Home / My Reports / <b>Report #CN-8902</b></p>
+
+  HEADER
+  <div class="header-card">
+    <div>
+      <h1>
+        Pothole on Main St
+        <span class="status">IN PROGRESS</span>
+      </h1>
+      <p class="sub">Submitted on Oct 12, 2023 · Road Maintenance</p>
+    </div>
+
+    <div class="header-btns">
+      <button class="btn light">Export PDF</button>
+      <button class="btn primary">Add Update</button>
+    </div>
+  </div>
+
+  MAIN GRID -->
+  <!-- <div class="grid">
+
+    <!-- LEFT -->
+    <!-- <section>
+
+      <div class="card">
+        <h3>Resolution Timeline</h3>
+
+        <div class="timeline">
+          <div class="step done">
+            <b>Reported</b>
+            <span>Oct 12, 09:45 AM</span>
+            <p>Severe pothole reported near Main & 4th St.</p>
+          </div>
+
+          <div class="step done">
+            <b>Assigned</b>
+            <span>Oct 13, 02:20 PM</span>
+            <p>Assigned to District 4 Road Crew</p>
+          </div>
+
+          <div class="step active">
+            <b>In Progress</b>
+            <span>Oct 15, 08:00 AM</span>
+            <p>Inspection complete. Repair scheduled.</p>
+          </div>
+
+          <div class="step pending">
+            <b>Resolved</b>
+            <span>Expected Oct 20</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card note">
+        <b>Officer Jane Doe</b>
+        <span class="time">2 hours ago</span>
+        <p>
+          Area marked with cones. Crew notified for permanent fix.
+        </p>
+      </div>
+
+      <div class="card">
+        <b>System Update</b>
+        <p>Status changed from “Reported” to “Assigned”.</p>
+      </div>
+
+    </section>
+
+    <!-- RIGHT -->
+    <!-- <aside>
+
+      <div class="card">
+        <h4>Original Evidence</h4>
+        <img src="potholes-road.jpg" alt="Pothole" class="img">
+      </div>
+
+      <div class="card">
+        <h4>Location</h4>
+        <iframe
+          src="https://maps.google.com/maps?q=Main%20Street&z=14&output=embed">
+        </iframe>
+        <p class="small">📍 452 Main St, Downtown</p>
+      </div>
+
+      <div class="summary">
+        <h3>Report Summary</h3>
+        <div><span>Tracking ID</span><b>CN-8902</b></div>
+        <div><span>Priority</span><b>MEDIUM</b></div>
+        <div><span>Estimated Fix</span><b>5 Days</b></div>
+        <div><span>Views</span><b>24 people</b></div>
+
+        <button class="btn white">Share Update</button>
+      </div>
+
+    </aside>
+
+  </div>
+</main>
+
+<footer>CityResolve © 2023</footer>
+<script src="report.js"></script>
+
+</body>
+</html> --> --> --> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CityResolve – Report</title>
+  <link rel="stylesheet" href="report.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-left">
+    <div class="logo">CityConnect</div>
+    <nav>
+      <a href="#">Dashboard</a>
+      <a href="#" class="active">My Reports</a>
+      <a href="#">Map</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <p class="breadcrumb">Home / My Reports / <b id="trackId">-</b></p>
+
+  <!-- HEADER -->
+  <div class="header-card">
+    <div>
+      <h1>
+        <span id="title">Loading...</span>
+        <span class="status" id="headerStatus">-</span>
+      </h1>
+      <p class="sub" id="category">-</p>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="grid">
+
+    <!-- LEFT -->
+    <section>
+
+      <div class="card">
+        <h3>Resolution Timeline</h3>
+
+        <!-- ❌ NO STATIC STEPS -->
+        <!-- ✅ JS WILL FILL THIS -->
+        <div class="timeline" id="timeline"></div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT -->
+    <aside>
+
+      <div class="card">
+        <h4>Original Evidence</h4>
+        <img id="evidenceImg" class="img" />
+      </div>
+
+      <div class="card">
+        <h4>Location</h4>
+        <iframe id="mapFrame"></iframe>
+        <p class="small" id="address">-</p>
+      </div>
+
+      <div class="summary">
+        <h3>Report Summary</h3>
+        <div><span>Tracking ID</span><b id="sumTrack">-</b></div>
+        <div><span>Priority</span><b id="priority">-</b></div>
+        <div><span>Status</span><b id="status">-</b></div>
+      </div>
+
+    </aside>
+
+  </div>
+</main>
+
+<footer>CityResolve © 2023</footer>
+
+<!-- ✅ JS AT END -->
+<script src="report.js"></script>
+</body>
+</html>
