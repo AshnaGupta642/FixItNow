@@ -2,77 +2,150 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>FixItNow Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FixItNow | AI Infrastructure Reporter</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    label { display: block; margin: 10px 0 5px; }
-    input, select, button { padding: 5px; margin-bottom: 10px; width: 300px; }
-    #response { margin-top: 20px; white-space: pre-wrap; background: #f0f0f0; padding: 10px; }
+    body { background: #0f172a; color: white; font-family: 'Inter', sans-serif; }
+    .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+    .accent-gradient { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); }
+    input, select { background: rgba(15, 23, 42, 0.6) !important; border: 1px solid #334155 !important; color: white !important; }
+    input:focus { border-color: #818cf8 !important; outline: none; box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.2); }
   </style>
 </head>
-<body>
+<body class="p-4 md:p-8">
 
-  <h2>Test ML + Backend Connection</h2>
+  <div class="max-w-6xl mx-auto">
+    <header class="mb-8 flex justify-between items-center">
+      <div>
+        <h1 class="text-3xl font-extrabold tracking-tight text-white">FixIt<span class="text-indigo-400">Now</span></h1>
+        <p class="text-slate-400">Citizen-led AI Maintenance Portal</p>
+      </div>
+      <div class="hidden md:block text-right text-xs text-slate-500 font-mono">
+        SYSTEM STATUS: <span class="text-emerald-400">ONLINE</span><br>
+        AI MODEL: <span class="text-indigo-400">V3-DETECTION</span>
+      </div>
+    </header>
 
-  <form id="issueForm">
-    <label>Upload Image</label>
-    <input type="file" id="image" accept="image/*" required>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      
+      <div class="lg:col-span-7 glass p-6 rounded-3xl">
+        <form id="issueForm" class="space-y-6">
+          
+          <div class="relative group">
+            <label class="block text-sm font-semibold mb-2 text-slate-300">Evidence Upload</label>
+            <div id="drop-zone" class="border-2 border-dashed border-slate-700 rounded-2xl p-8 text-center hover:border-indigo-500 transition-all cursor-pointer bg-slate-800/30">
+              <input type="file" id="image" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" required>
+              <div id="upload-content">
+                <i class="fa-solid fa-cloud-arrow-up text-4xl text-indigo-400 mb-3"></i>
+                <p class="text-sm text-slate-300">Click or drag photo of the issue</p>
+                <p class="text-xs text-slate-500 mt-1">Supports JPG, PNG (Max 10MB)</p>
+              </div>
+              <img id="image-preview" src="" class="hidden mx-auto max-h-48 rounded-xl shadow-2xl">
+            </div>
+          </div>
 
-    <label>Latitude</label>
-    <input type="text" id="latitude" value="12.9716">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Street Address</label>
+              <input type="text" id="street" placeholder="e.g. 5th Main Road" class="w-full rounded-xl p-3 text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Ward Number</label>
+              <input type="text" id="ward" placeholder="e.g. Ward 12" class="w-full rounded-xl p-3 text-sm">
+            </div>
+          </div>
 
-    <label>Longitude</label>
-    <input type="text" id="longitude" value="77.5946">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="md:col-span-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">City</label>
+              <input type="text" id="city" placeholder="City Name" class="w-full rounded-xl p-3 text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Priority</label>
+              <select id="priority" class="w-full rounded-xl p-3 text-sm appearance-none">
+                <option value="LOW">Low</option>
+                <option value="MEDIUM" selected>Medium</option>
+                <option value="HIGH">High</option>
+              </select>
+            </div>
+          </div>
 
-    <label>Street</label>
-    <input type="text" id="street" value="Test Street">
+          <input type="hidden" id="latitude" value="12.9716">
+          <input type="hidden" id="longitude" value="77.5946">
 
-    <label>Ward</label>
-    <input type="text" id="ward" value="Test Ward">
+          <button type="submit" class="w-full accent-gradient hover:opacity-90 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-indigo-500/20 transition-all transform hover:scale-[1.01] active:scale-95">
+            Analyze & Submit Report
+          </button>
+        </form>
+      </div>
 
-    <label>City</label>
-    <input type="text" id="city" value="Test City">
+      <div class="lg:col-span-5 space-y-6">
+        
+        <div class="glass rounded-3xl overflow-hidden h-64 relative">
+          <div class="absolute inset-0 bg-slate-800 flex items-center justify-center">
+            <i class="fa-solid fa-location-dot text-indigo-500 text-3xl animate-bounce"></i>
+            <span class="ml-3 text-slate-400 font-mono">GPS: 12.97, 77.59</span>
+          </div>
+          <div class="absolute bottom-4 left-4 glass px-3 py-1 rounded-full text-xs">Live Location Active</div>
+        </div>
 
-    <label>Priority</label>
-    <select id="priority">
-      <option value="HIGH">HIGH</option>
-      <option value="MEDIUM">MEDIUM</option>
-      <option value="LOW">LOW</option>
-    </select>
+        <div id="statusBox" class="glass rounded-3xl p-6 border-l-4 border-slate-700 transition-all">
+          <h3 class="text-sm font-bold uppercase text-slate-500 mb-4 flex items-center">
+            <i class="fa-solid fa-robot mr-2"></i> AI Processing Engine
+          </h3>
+          
+          <div id="response" class="font-mono text-sm text-slate-300">
+            Waiting for report submission...
+          </div>
 
-    <button type="submit">Submit Issue</button>
-  </form>
+          <div id="uploadProgress" class="hidden mt-4 h-1.5 w-full bg-slate-700 rounded-full overflow-hidden">
+            <div class="h-full accent-gradient animate-pulse" style="width: 70%"></div>
+          </div>
+        </div>
 
-  <div id="response"></div>
+      </div>
+    </div>
+  </div>
 
   <script>
-    const form = document.getElementById("issueForm");
+    const fileInput = document.getElementById("image");
+    const preview = document.getElementById("image-preview");
+    const uploadContent = document.getElementById("upload-content");
     const responseDiv = document.getElementById("response");
+    const statusBox = document.getElementById("statusBox");
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const fileInput = document.getElementById("image");
-      const latitude = document.getElementById("latitude").value;
-      const longitude = document.getElementById("longitude").value;
-      const street = document.getElementById("street").value;
-      const ward = document.getElementById("ward").value;
-      const city = document.getElementById("city").value;
-      const priority = document.getElementById("priority").value;
-
-      if (!fileInput.files[0]) {
-        alert("Please select an image");
-        return;
+    // Preview image on selection
+    fileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          preview.src = e.target.result;
+          preview.classList.remove("hidden");
+          uploadContent.classList.add("hidden");
+        }
+        reader.readAsDataURL(file);
       }
+    });
+
+    document.getElementById("issueForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      // Update UI for Loading
+      document.getElementById("uploadProgress").classList.remove("hidden");
+      statusBox.classList.add("border-indigo-500");
+      responseDiv.innerHTML = `<span class="text-indigo-400">Running AI Vision Model...</span>`;
 
       const formData = new FormData();
       formData.append("image", fileInput.files[0]);
-      formData.append("latitude", latitude);
-      formData.append("longitude", longitude);
-      formData.append("street", street);
-      formData.append("ward", ward);
-      formData.append("city", city);
-      formData.append("priority", priority);
+      formData.append("latitude", document.getElementById("latitude").value);
+      formData.append("longitude", document.getElementById("longitude").value);
+      formData.append("street", document.getElementById("street").value);
+      formData.append("ward", document.getElementById("ward").value);
+      formData.append("city", document.getElementById("city").value);
+      formData.append("priority", document.getElementById("priority").value);
 
       try {
         const res = await fetch("http://localhost:5000/api/issues/create", {
@@ -81,12 +154,19 @@
         });
 
         const data = await res.json();
-        responseDiv.textContent = JSON.stringify(data, null, 2);
+        
+        // Success Styling
+        statusBox.classList.replace("border-indigo-500", "border-emerald-500");
+        document.getElementById("uploadProgress").classList.add("hidden");
+        responseDiv.innerHTML = `
+          <div class="text-emerald-400 font-bold mb-2 underline">Analysis Complete</div>
+          <pre class="text-xs">${JSON.stringify(data, null, 2)}</pre>
+        `;
       } catch (err) {
-        responseDiv.textContent = "Error: " + err.message;
+        statusBox.classList.add("border-red-500");
+        responseDiv.innerHTML = `<span class="text-red-400 underline">ERROR:</span><br>${err.message}`;
       }
     });
   </script>
-
 </body>
 </html>
