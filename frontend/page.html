@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CityFix | Report Issue</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8fafc; font-family: 'Inter', sans-serif; }
+        .city-blue { color: #007bff; }
+        .bg-city-blue { background-color: #007bff; }
+        .upload-area { border: 2px dashed #e2e8f0; background: radial-gradient(circle, #ffffff 0%, #f1f5f9 100%); }
+        .ai-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <nav class="bg-white border-b border-slate-200 px-8 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="bg-city-blue p-2 rounded-full"><i class="fa-solid fa-city text-white text-xs"></i></div>
+            <span class="font-bold text-xl tracking-tight">CityFix</span>
+        </div>
+        <div class="hidden md:flex gap-8 text-sm font-medium text-slate-500">
+            <a href="#" class="hover:text-blue-600">Dashboard</a>
+            <a href="#" class="text-blue-600 border-b-2 border-blue-600 pb-1">Report Issue</a>
+            <a href="#" class="hover:text-blue-600">Live Map</a>
+        </div>
+        <button class="bg-city-blue text-white px-5 py-2 rounded-lg text-sm font-semibold flex items-center gap-2">
+            <i class="fa-solid fa-user"></i> My Account
+        </button>
+    </nav>
+
+    <main class="max-w-6xl mx-auto py-12 px-4">
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-extrabold text-slate-900 mb-2">Report an Infrastructure Issue</h1>
+            <p class="text-slate-500">Help us maintain a safe and clean community by reporting problems early.</p>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/60 overflow-hidden flex flex-col md:flex-row border border-slate-100">
+            
+            <div class="md:w-5/12 p-10 border-r border-slate-100 bg-slate-50/30">
+                <div class="flex items-center gap-2 mb-6">
+                    <i class="fa-solid fa-camera city-blue text-lg"></i>
+                    <h2 class="font-bold text-lg text-slate-800">Visual Evidence</h2>
+                </div>
+                
+                <div class="upload-area rounded-2xl p-12 text-center relative group transition-all hover:bg-white">
+                    <input type="file" id="image" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer z-10" required>
+                    <div id="drop-text">
+                        <div class="bg-slate-200/50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa-solid fa-cloud-arrow-up text-slate-500 text-2xl"></i>
+                        </div>
+                        <p class="font-bold text-slate-800">Upload Photo</p>
+                        <p class="text-xs text-slate-400 mt-1 mb-6">Drag and drop or click to browse</p>
+                        <span class="bg-city-blue text-white px-6 py-2 rounded-lg text-sm font-bold shadow-lg shadow-blue-500/30">Select Image</span>
+                    </div>
+                    <img id="preview" class="hidden rounded-xl w-full object-cover">
+                </div>
+
+                <div id="statusBox" class="mt-6 p-4 rounded-xl border border-slate-200 bg-white hidden transition-all">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-robot city-blue"></i>
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500">AI Analysis</span>
+                    </div>
+                    <div id="response" class="text-[11px] font-mono text-slate-600 break-words">
+                        Waiting for upload...
+                    </div>
+                    <div id="uploadProgress" class="hidden mt-3 h-1 w-full bg-slate-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-blue-500 ai-pulse" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:w-7/12 p-10">
+                <h2 class="font-bold text-lg mb-6 text-slate-800">Location & Details</h2>
+                
+                <form id="issueForm" class="space-y-5">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label class="text-[11px] font-bold text-slate-500 uppercase">Latitude</label>
+                            <input type="text" id="latitude" value="12.9716" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm outline-none bg-slate-50">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[11px] font-bold text-slate-500 uppercase">Longitude</label>
+                            <input type="text" id="longitude" value="77.5946" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm outline-none bg-slate-50">
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-500 uppercase">Street Address</label>
+                        <input type="text" id="street" placeholder="Enter street name" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-100">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label class="text-[11px] font-bold text-slate-500 uppercase">Ward</label>
+                            <select id="ward" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm bg-white">
+                                <option value="01">Ward 01</option>
+                                <option value="02">Ward 02</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[11px] font-bold text-slate-500 uppercase">City</label>
+                            <input type="text" id="city" value="Johannesburg" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50" readonly>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-500 uppercase">Priority Level</label>
+                        <select id="priority" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm bg-white">
+                            <option value="LOW">Low - Minor cosmetic</option>
+                            <option value="MEDIUM">Medium - Functional</option>
+                            <option value="HIGH">High - Safety hazard</option>
+                        </select>
+                    </div>
+
+                    <div class="flex gap-4 pt-4">
+                        <button type="submit" id="submitBtn" class="flex-1 bg-city-blue text-white py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20">
+                            <i class="fa-solid fa-paper-plane text-xs"></i> Submit Infrastructure Report
+                        </button>
+                        <button type="button" class="px-8 py-3.5 border border-slate-200 rounded-xl font-semibold text-slate-600 hover:bg-slate-50 transition-all">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const fileInput = document.getElementById('image');
+        const preview = document.getElementById('preview');
+        const dropText = document.getElementById('drop-text');
+        const statusBox = document.getElementById('statusBox');
+        const responseDiv = document.getElementById('response');
+        const uploadProgress = document.getElementById('uploadProgress');
+
+        // Handle Preview
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    preview.src = event.target.result;
+                    preview.classList.remove('hidden');
+                    dropText.classList.add('hidden');
+                    // Show status box when image is selected
+                    statusBox.classList.remove('hidden');
+                    responseDiv.innerHTML = "Image ready for analysis...";
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Handle Submission
+        document.getElementById('issueForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // UI Changes for Loading
+            statusBox.classList.remove('hidden');
+            uploadProgress.classList.remove('hidden');
+            statusBox.classList.add('border-blue-400');
+            responseDiv.innerHTML = `<span class="text-blue-600 font-bold">RUNNING AI VISION MODEL...</span><br>Identifying issue type...`;
+
+            const formData = new FormData();
+            formData.append("image", fileInput.files[0]);
+            formData.append("latitude", document.getElementById("latitude").value);
+            formData.append("longitude", document.getElementById("longitude").value);
+            formData.append("street", document.getElementById("street").value);
+            formData.append("ward", document.getElementById("ward").value);
+            formData.append("city", document.getElementById("city").value);
+            formData.append("priority", document.getElementById("priority").value);
+
+            try {
+                const res = await fetch("http://localhost:5000/api/issues/create", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await res.json();
+
+                // Success State
+                uploadProgress.classList.add('hidden');
+                statusBox.classList.replace('border-blue-400', 'border-green-500');
+                responseDiv.innerHTML = `
+                    <div class="text-green-600 font-bold mb-1 underline">AI ANALYSIS COMPLETE</div>
+                    <div class="text-slate-800">Detected: <b>${data.ai_analysis}</b></div>
+                    <div class="mt-1 text-slate-400">Database ID: ${data.id}</div>
+                `;
+            } catch (err) {
+                // Error State
+                uploadProgress.classList.add('hidden');
+                statusBox.classList.add('border-red-500');
+                responseDiv.innerHTML = `<span class="text-red-500 font-bold underline">ERROR:</span><br>${err.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
