@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CityConnect | Admin Login</title>
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f4f6fb;
+      font-family: Arial, sans-serif;
+    }
+
+    .login-box {
+      width: 360px;
+      background: #fff;
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 800;
+      color: #2563eb;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 11px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      margin-bottom: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #2563eb;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .login-btn:hover {
+      background: #1e40af;
+    }
+
+    .divider {
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      margin: 20px 0;
+    }
+
+    .social {
+      width: 100%;
+      padding: 11px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .google i { color: #ea4335; }
+    .apple i { color: #000; }
+
+    .error {
+      text-align: center;
+      font-size: 12px;
+      color: red;
+      margin-top: 12px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <h1 class="logo">CityConnect</h1>
+    <p class="subtitle">Admin login only</p>
+
+    <form id="adminLoginForm">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="admin@cityconnect.com" required>
+
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Enter password" required>
+
+      <button class="login-btn" type="submit">Login</button>
+    </form>
+
+    <div class="divider">or continue with</div>
+
+    <button class="social google">
+      <i class="fa-brands fa-google"></i>
+      Continue with Google
+    </button>
+
+    <button class="social apple">
+      <i class="fa-brands fa-apple"></i>
+      Continue with Apple
+    </button>
+
+    <div id="errorBox" class="error"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById("adminLoginForm");
+    const errorBox = document.getElementById("errorBox");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      errorBox.style.display = "none";
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        const res = await fetch("http://localhost:5000/api/admin/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || "Invalid admin credentials");
+        }
+
+        // save real backend token
+        localStorage.setItem("adminToken", data.token);
+
+        // redirect to admin dashboard
+        window.location.href = "dashboard.html";
+
+      } catch (err) {
+        errorBox.innerText = err.message;
+        errorBox.style.display = "block";
+      }
+    });
+  </script>
+
+</body>
+</html>
