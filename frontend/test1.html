@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FixItNow Test</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    label { display: block; margin: 10px 0 5px; }
+    input, select, button { padding: 5px; margin-bottom: 10px; width: 300px; }
+    #response { margin-top: 20px; white-space: pre-wrap; background: #f0f0f0; padding: 10px; }
+  </style>
+</head>
+<body>
+
+  <h2>Test ML + Backend Connection</h2>
+
+  <form id="issueForm">
+    <label>Upload Image</label>
+    <input type="file" id="image" accept="image/*" required>
+
+    <label>Latitude</label>
+    <input type="text" id="latitude" value="12.9716">
+
+    <label>Longitude</label>
+    <input type="text" id="longitude" value="77.5946">
+
+    <label>Street</label>
+    <input type="text" id="street" value="Test Street">
+
+    <label>Ward</label>
+    <input type="text" id="ward" value="Test Ward">
+
+    <label>City</label>
+    <input type="text" id="city" value="Test City">
+
+    <label>Priority</label>
+    <select id="priority">
+      <option value="HIGH">HIGH</option>
+      <option value="MEDIUM">MEDIUM</option>
+      <option value="LOW">LOW</option>
+    </select>
+
+    <button type="submit">Submit Issue</button>
+  </form>
+
+  <div id="response"></div>
+
+  <script>
+    const form = document.getElementById("issueForm");
+    const responseDiv = document.getElementById("response");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const fileInput = document.getElementById("image");
+      const latitude = document.getElementById("latitude").value;
+      const longitude = document.getElementById("longitude").value;
+      const street = document.getElementById("street").value;
+      const ward = document.getElementById("ward").value;
+      const city = document.getElementById("city").value;
+      const priority = document.getElementById("priority").value;
+
+      if (!fileInput.files[0]) {
+        alert("Please select an image");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("image", fileInput.files[0]);
+      formData.append("latitude", latitude);
+      formData.append("longitude", longitude);
+      formData.append("street", street);
+      formData.append("ward", ward);
+      formData.append("city", city);
+      formData.append("priority", priority);
+
+      try {
+        const res = await fetch("http://localhost:5000/api/issues/create", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await res.json();
+        responseDiv.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        responseDiv.textContent = "Error: " + err.message;
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -17,3 +17,4 @@ output.jpg
 
 # OS files
 .DS_Store
+/backend/.env

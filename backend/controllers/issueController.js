@@ -101,6 +101,7 @@ const getDepartment = (issueType) => {
     streetlight: "Electricity",
     waterleak: "Water Supply",
     roadcrack: "Roads",
+    garbage: "Sanitation",
   };
   return map[issueType] || "General";
 };
@@ -111,18 +112,30 @@ exports.createIssue = async (req, res) => {
       return res.status(400).json({ success: false, message: "No image uploaded" });
     }
 
-    // 1️⃣ Upload image to Cloudinary
-    const result = await cloudinary.uploader.upload(req.file.path);
+    const localPath = req.file.path;
+
+    // 1️⃣ Predict issue type using ML model
+    let predictedType = "";
+    try {
+      predictedType = await detectIssue(localPath);
+      console.log("Predicted Type:", predictedType);
+    } catch (err) {
+      console.error("ML prediction failed:", err);
+      return res.status(500).json({ success: false, message: "ML prediction failed" });
+    }
+
+    // 2️⃣ Upload image to Cloudinary
+    const result = await cloudinary.uploader.upload(localPath);
     const imageUrl = result.secure_url;
-    fs.unlinkSync(req.file.path);
 
-    // 2️⃣ Predict issue type using ML model
-    const predictedType = await detectIssue(req.file.path);
+    // 3️⃣ Delete local temp file
+    fs.unlinkSync(localPath);
 
-    // 3️⃣ Check duplicate issues
+    // 4️⃣ Extract other data
     const { latitude, longitude, street, ward, city, priority } = req.body;
-    const duplicate = await checkDuplicate(predictedType, latitude, longitude);
 
+    // 5️⃣ Check for duplicate
+    const duplicate = await checkDuplicate(predictedType, latitude, longitude);
     if (duplicate) {
       duplicate.upvotes += 1;
       await duplicate.save();
@@ -133,7 +146,7 @@ exports.createIssue = async (req, res) => {
       });
     }
 
-    // 4️⃣ Save new issue
+    // 6️⃣ Create new issue
     const issue = await Issue.create({
       imageUrl,
       issueType: predictedType,
