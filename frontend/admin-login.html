@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CityConnect | Admin Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body class="bg-slate-50 text-slate-700">
+
+<!-- NAVBAR -->
+<nav class="bg-white border-b border-slate-200 px-8 py-4 flex items-center">
+  <div class="flex items-center gap-2">
+    <div class="bg-blue-600 p-2 rounded-full">
+      <i class="fa-solid fa-city text-white text-xs"></i>
+    </div>
+    <span class="font-bold text-xl">CityConnect</span>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="max-w-xl mx-auto py-20 px-4">
+  <div class="bg-white rounded-3xl shadow-xl p-10">
+
+    <h1 class="text-3xl font-extrabold text-slate-900 text-center mb-2">
+      Admin Login
+    </h1>
+    <p class="text-center text-slate-500 mb-8">
+      Authorized access only
+    </p>
+
+    <div class="space-y-4">
+      <input id="email" type="email" placeholder="Admin Email"
+        class="w-full px-4 py-3 border rounded-xl">
+
+      <input id="password" type="password" placeholder="Password"
+        class="w-full px-4 py-3 border rounded-xl">
+
+      <button onclick="login()"
+        class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700">
+        🔐 Login
+      </button>
+    </div>
+
+    <p id="error" class="text-red-500 text-sm mt-4 text-center hidden">
+      Invalid credentials
+    </p>
+  </div>
+</main>
+
+<script>
+async function login() {
+  const res = await fetch("http://localhost:5000/api/admin/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: email.value,
+      password: password.value
+    })
+  });
+
+  const data = await res.json();
+
+  if (data.token) {
+    localStorage.setItem("adminToken", data.token);
+    window.location.href = "admin-dashboard.html";
+  } else {
+    document.getElementById("error").classList.remove("hidden");
+  }
+}
+</script>
+
+</body>
+</html>

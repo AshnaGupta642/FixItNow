@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CityConnect | Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body class="bg-slate-50 text-slate-700">
+
+<!-- NAVBAR -->
+<nav class="bg-white border-b border-slate-200 px-8 py-4 flex items-center justify-between">
+  <div class="flex items-center gap-2">
+    <div class="bg-blue-600 p-2 rounded-full">
+      <i class="fa-solid fa-city text-white text-xs"></i>
+    </div>
+    <span class="font-bold text-xl">CityConnect</span>
+  </div>
+
+  <button onclick="logout()"
+    class="text-sm bg-red-100 text-red-600 px-4 py-2 rounded-lg font-bold">
+    Logout
+  </button>
+</nav>
+
+<!-- MAIN -->
+<main class="max-w-6xl mx-auto py-12 px-4">
+
+  <h1 class="text-4xl font-extrabold text-slate-900 mb-2">
+    Admin Dashboard
+  </h1>
+  <p class="text-slate-500 mb-8">
+    Manage reported city issues
+  </p>
+
+  <div id="issues"
+    class="grid md:grid-cols-2 gap-6">
+  </div>
+
+</main>
+
+<script>
+const token = localStorage.getItem("adminToken");
+if (!token) {
+  window.location.href = "admin-login.html";
+}
+
+function logout() {
+  localStorage.removeItem("adminToken");
+  window.location.href = "admin-login.html";
+}
+
+fetch("http://localhost:5000/api/admin/issues", {
+  headers: {
+    Authorization: "Bearer " + token
+  }
+})
+.then(res => res.json())
+.then(data => {
+  const container = document.getElementById("issues");
+  container.innerHTML = data.issues.map(issue => `
+    <div class="bg-white rounded-2xl shadow p-6 flex flex-col gap-4">
+
+      <img src="${issue.imageUrl}" 
+           class="w-full h-40 object-cover rounded-xl" />
+
+      <div>
+        <h3 class="font-bold text-lg capitalize">${issue.issueType}</h3>
+        <p class="text-sm text-slate-500">
+          ${issue.street}, ${issue.ward}
+        </p>
+      </div>
+
+      <div class="flex justify-between items-center">
+        <span class="text-xs font-bold px-3 py-1 rounded-full
+          ${issue.priority === "HIGH" ? "bg-red-100 text-red-600" :
+            issue.priority === "MEDIUM" ? "bg-yellow-100 text-yellow-600" :
+            "bg-green-100 text-green-600"}">
+          ${issue.priority}
+        </span>
+
+        <select onchange="updateStatus('${issue._id}', this.value)"
+          class="text-sm border rounded-lg px-2 py-1">
+          <option ${issue.status === "Pending" && "selected"}>Pending</option>
+          <option ${issue.status === "In Progress" && "selected"}>In Progress</option>
+          <option ${issue.status === "Resolved" && "selected"}>Resolved</option>
+        </select>
+      </div>
+
+    </div>
+  `).join("");
+});
+function updateStatus(id, status) {
+  fetch(`http://localhost:5000/api/admin/issues/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    },
+    body: JSON.stringify({ status })
+  })
+  .then(res => res.json())
+  .then(() => alert("Status updated ✅"))
+  .catch(() => alert("Error updating status ❌"));
+}
+
+
+</script>
+
+</body>
+</html>
