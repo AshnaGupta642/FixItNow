@@ -9,7 +9,6 @@
 
 <body class="bg-slate-50 text-slate-700">
 
-<!-- ================= NAVBAR ================= -->
 <nav class="bg-white border-b border-slate-200 px-8 py-4 flex items-center">
   <div class="flex items-center gap-2">
     <div class="bg-blue-600 p-2 rounded-full">
@@ -19,13 +18,14 @@
   </div>
 
   <div class="ml-10 hidden md:flex gap-8 text-sm font-medium text-slate-500">
-    <a href="#">Dashboard</a>
-    <a href="#" class="text-blue-600 border-b-2 border-blue-600 pb-1">Report Issue</a>
-    <a href="#">Live Map</a>
+    <a href="#index.html" class="hover:text-blue-600">Home</a>
+    <a href="page.html" class="text-blue-600 border-b-2 border-blue-600 pb-1">Report</a>
+    <a href="admin-dashboard.html" class="hover:text-blue-600">Admin Dashboard</a>
+    
+    <a href="admin-login.html">Admin</a>
   </div>
 </nav>
 
-<!-- ================= MAIN ================= -->
 <main class="max-w-6xl mx-auto py-12 px-4">
 
   <h1 class="text-4xl font-extrabold text-slate-900 text-center mb-2">
@@ -37,112 +37,189 @@
 
   <div class="bg-white rounded-3xl shadow-xl flex flex-col md:flex-row overflow-hidden">
 
-    <!-- LEFT : IMAGE -->
     <div class="md:w-5/12 p-10 bg-slate-50 border-r">
-      <h2 class="font-bold mb-4">📷 Upload Evidence</h2>
+      <h2 class="font-bold mb-4 italic text-blue-600">Step 1: Evidence</h2>
 
-      <div class="border-2 border-dashed rounded-xl p-10 text-center relative">
+      <div class="border-2 border-dashed border-slate-300 rounded-xl p-10 text-center relative bg-white hover:border-blue-500 transition-all">
         <input type="file" id="image" accept="image/*"
           class="absolute inset-0 opacity-0 cursor-pointer">
 
-        <p class="font-bold">Upload Photo</p>
-        <p class="text-xs text-slate-400 mb-4">Click to select image</p>
+        <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-300 mb-2"></i>
+        <p class="font-bold text-sm">Upload Photo</p>
+        <p class="text-[10px] text-slate-400 mb-4">Click to select image</p>
 
-        <img id="preview" class="hidden rounded-xl w-full object-cover mt-4">
+        <img id="preview" class="hidden rounded-xl w-full object-cover mt-4 shadow-md">
       </div>
 
-      <div id="statusBox" class="hidden mt-6 p-4 border rounded-xl">
-        <b>AI Status</b>
-        <div id="response" class="text-xs mt-2"></div>
+      <div id="statusBox" class="hidden mt-6 p-4 border rounded-xl bg-white shadow-sm border-blue-100">
+        <div class="flex items-center gap-2 mb-2">
+            <span id="loader" class="hidden"><i class="fa-solid fa-circle-notch animate-spin text-blue-500"></i></span>
+            <b class="text-sm">AI Analysis Result</b>
+        </div>
+        <div id="response" class="text-xs text-slate-500 leading-relaxed"></div>
       </div>
     </div>
 
-    <!-- RIGHT : FORM -->
     <div class="md:w-7/12 p-10">
-      <h2 class="font-bold mb-6">📍 Location & Details</h2>
+      <div class="flex justify-between items-center mb-6">
+          <h2 class="font-bold italic text-blue-600">Step 2: Location Details</h2>
+          <button type="button" onclick="getLiveLocation()" class="text-[10px] bg-blue-50 text-blue-600 px-3 py-1 rounded-full font-bold hover:bg-blue-100 transition-all">
+              <i class="fa-solid fa-location-crosshairs mr-1"></i> RE-DETECT LOCATION
+          </button>
+      </div>
 
       <form id="issueForm" class="space-y-4">
 
-        <!-- LATITUDE (backend ke liye hidden) -->
-        <input type="hidden" id="latitude" value="12.9716">
-
-        <!-- PINCODE -->
-        <div>
-          <label class="text-xs font-bold uppercase text-slate-500">Pincode</label>
-          <input type="text" id="pincode" placeholder="Enter pincode"
-            class="w-full px-4 py-2 border rounded-lg">
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="text-[10px] font-bold uppercase text-slate-400">Latitude</label>
+              <input type="text" id="latitude" placeholder="Fetching..." class="w-full px-4 py-2 border rounded-lg bg-slate-50 text-sm outline-none focus:border-blue-500">
+            </div>
+            <div>
+              <label class="text-[10px] font-bold uppercase text-slate-400">Longitude</label>
+              <input type="text" id="longitude" placeholder="Fetching..." class="w-full px-4 py-2 border rounded-lg bg-slate-50 text-sm outline-none focus:border-blue-500">
+            </div>
         </div>
 
-        <!-- STREET -->
         <div>
-          <label class="text-xs font-bold uppercase text-slate-500">Street</label>
-          <input type="text" id="street"
-            class="w-full px-4 py-2 border rounded-lg">
+          <label class="text-[10px] font-bold uppercase text-slate-400">Area</label>
+          <input type="text" id="street" placeholder="Detecting Area name..."
+            class="w-full px-4 py-2 border rounded-lg outline-none focus:border-blue-500">
         </div>
 
-        <!-- WARD -->
-        <div>
-          <label class="text-xs font-bold uppercase text-slate-500">Ward</label>
-          <select id="ward" class="w-full px-4 py-2 border rounded-lg">
-            <option>Ward 01</option>
-            <option>Ward 02</option>
-          </select>
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="text-[10px] font-bold uppercase text-slate-400">District</label>
+              <input type="text" id="ward" placeholder="Detecting district name..." class="w-full px-4 py-2 border rounded-lg outline-none focus:border-blue-500">
+            </div>
+            <div>
+              <label class="text-[10px] font-bold uppercase text-slate-400">Pincode</label>
+              <input type="text" id="city" placeholder="Detecting pincode..." class="w-full px-4 py-2 border rounded-lg outline-none focus:border-blue-500">
+            </div>
         </div>
 
-        <!-- PRIORITY -->
-        <div>
-          <label class="text-xs font-bold uppercase text-slate-500">Priority</label>
-          <select id="priority" class="w-full px-4 py-2 border rounded-lg">
+        <!-- <div>
+          <label class="text-[10px] font-bold uppercase text-slate-400">Priority (Estimated by AI)</label>
+          <select id="priority" class="w-full px-4 py-2 border rounded-lg bg-slate-50 font-bold text-sm">
             <option value="LOW">Low</option>
-            <option value="MEDIUM">Medium</option>
+            <option value="MEDIUM" selected>Medium</option>
             <option value="HIGH">High</option>
           </select>
-        </div>
+        </div> -->
+        <div>
+  <label class="text-[10px] font-bold uppercase text-slate-400">Request Urgency (User Input)</label>
+  <select id="userUrgency" class="w-full px-4 py-2 border rounded-lg bg-slate-50 font-bold text-sm">
+    <option value="ROUTINE">Routine Maintenance</option>
+    <option value="MAINTENANCE" selected>Standard Repair</option>
+    <option value="IMMEDIATE">Immediate Fix Required</option>
+  </select>
+</div>
 
-        <button type="submit"
-          class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700">
-          🚀 Submit Report
+        <button type="submit" id="submitBtn"
+          class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-100 transition-all flex justify-center items-center gap-2">
+          🚀 Submit Official Report
         </button>
       </form>
     </div>
   </div>
 </main>
 
-<!-- ================= JS ================= -->
 <script>
+// --- 1. GEOLOCATION LOGIC ---
+async function getLiveLocation() {
+  const latInput = document.getElementById("latitude");
+  const lngInput = document.getElementById("longitude");
+  const streetInput = document.getElementById("street");
+  const cityInput = document.getElementById("city");
+  const wardInput = document.getElementById("ward");
+
+  latInput.value = "Detecting...";
+  lngInput.value = "Detecting...";
+
+  if (!navigator.geolocation) {
+    alert("Geolocation not supported. Please enter manually.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+
+      latInput.value = lat.toFixed(6);
+      lngInput.value = lng.toFixed(6);
+
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`
+        );
+        const data = await res.json();
+
+        if (data.address) {
+          const mainArea = data.address.suburb || data.address.neighbourhood || data.address.residential || "";
+          const road = data.address.road || "";
+          streetInput.value = road && mainArea ? `${road}, ${mainArea}` : (road || mainArea || "");
+          wardInput.value = data.address.state_district || data.address.city_district || data.address.county || "";
+          
+          // IMPORTANT: Mapping 'postcode' or 'city' to your City input box
+          cityInput.value = data.address.postcode || data.address.city || data.address.town || "";
+        }
+      } catch (err) {
+        console.error("Geocoding error:", err);
+      }
+    },
+    (error) => {
+      latInput.value = ""; lngInput.value = "";
+      alert("Location access denied. Please enter details manually.");
+    },
+    { enableHighAccuracy: true, timeout: 10000 }
+  );
+}
+window.onload = getLiveLocation;
+
+// --- 2. PREVIEW LOGIC ---
 const imageInput = document.getElementById("image");
 const preview = document.getElementById("preview");
 const statusBox = document.getElementById("statusBox");
 const responseDiv = document.getElementById("response");
+const loader = document.getElementById("loader");
 
 imageInput.addEventListener("change", () => {
   const file = imageInput.files[0];
   if (!file) return;
-
   const reader = new FileReader();
   reader.onload = e => {
     preview.src = e.target.result;
     preview.classList.remove("hidden");
     statusBox.classList.remove("hidden");
-    responseDiv.innerText = "Image selected. Ready to upload.";
+    responseDiv.innerText = "Image selected. Ready for AI Analysis.";
   };
   reader.readAsDataURL(file);
 });
 
+// --- 3. SUBMIT LOGIC (CONNECTED TO BACKEND) ---
 document.getElementById("issueForm").addEventListener("submit", async e => {
   e.preventDefault();
+  const submitBtn = document.getElementById("submitBtn");
 
-  responseDiv.innerText = "Uploading & analyzing...";
-  statusBox.classList.remove("hidden");
+  // UI State: Loading
+  submitBtn.disabled = true;
+  submitBtn.classList.add("opacity-50", "cursor-not-allowed");
+  loader.classList.remove("hidden");
+  responseDiv.innerText = "Uploading & AI Analyzing...";
 
   const formData = new FormData();
   formData.append("image", imageInput.files[0]);
   formData.append("latitude", document.getElementById("latitude").value);
-  formData.append("longitude", "0"); // backend safe dummy
-  formData.append("pincode", document.getElementById("pincode").value);
+  formData.append("longitude", document.getElementById("longitude").value || "0");
   formData.append("street", document.getElementById("street").value);
   formData.append("ward", document.getElementById("ward").value);
-  formData.append("priority", document.getElementById("priority").value);
+  
+  // KEY FIX: Backend expects 'pincode', we send value from the 'city' input
+  formData.append("pincode", document.getElementById("city").value); 
+  
+  // Send urgency to your Priority Service
+  formData.append("userUrgency", document.getElementById("userUrgency").value);
 
   try {
     const res = await fetch("http://localhost:5000/api/issues/create", {
@@ -151,9 +228,53 @@ document.getElementById("issueForm").addEventListener("submit", async e => {
     });
 
     const data = await res.json();
-    responseDiv.innerHTML = `✅ Report Created<br>ID: <b>${data.id}</b>`;
+    
+    if (data.success || data.id) {
+        loader.classList.add("hidden");
+        
+        // 🚨 GET THE REAL DATA FROM BACKEND RESPONSE
+        // Ensure your backend sends back: { success: true, issue: { priority: "HIGH", issueType: "water" } }
+        const serverPriority = data.issue ? data.issue.priority : "NOT CALCULATED";
+        const serverType = data.issue ? data.issue.issueType : "DETECTED";
+
+        // Logic for color coding the badge
+        const badgeColor = serverPriority === 'HIGH' ? 'bg-red-600' : (serverPriority === 'MEDIUM' ? 'bg-orange-500' : 'bg-blue-500');
+
+        responseDiv.innerHTML = `
+            <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100 mt-2 shadow-sm">
+                <div class="text-emerald-700 font-bold flex items-center gap-2 mb-3">
+                    <i class="fa-solid fa-circle-check"></i> Report Successfully Filed
+                </div>
+                <div class="space-y-2 text-slate-600 text-[11px]">
+                    <div class="flex justify-between">
+                        <span>Detected Issue:</span>
+                        <b class="capitalize text-slate-900">${serverType}</b>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>AI Final Priority:</span>
+                        <span class="px-2 py-0.5 rounded text-white font-bold ${badgeColor}">
+                            ${serverPriority}
+                        </span>
+                    </div>
+                    <div class="flex justify-between border-t pt-2 mt-2">
+                        <span>Reference ID:</span>
+                        <span class="font-mono text-blue-600">${data.issue?._id || data.id}</span>
+                    </div>
+                </div>
+            </div>
+            <button onclick="location.reload()" class="mt-4 w-full py-2 border border-blue-600 text-blue-600 rounded-lg font-bold hover:bg-blue-50 transition-all text-xs">
+                Submit Another Report
+            </button>
+        `;
+
+        submitBtn.innerHTML = `✅ Processed by City AI`;
+    }
   } catch (err) {
-    responseDiv.innerText = "❌ Error submitting report";
+    console.error("Fetch Error:", err);
+    responseDiv.innerHTML = `<div class="p-3 bg-red-50 text-red-600 rounded-lg text-xs font-bold border border-red-100 italic">❌ Server Connection Failed. Check if backend is running.</div>`;
+    submitBtn.disabled = false;
+    submitBtn.classList.remove("opacity-50");
+    loader.classList.add("hidden");
   }
 });
 </script>

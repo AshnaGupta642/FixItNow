@@ -19,3 +19,5 @@ output.jpg
 .DS_Store
 /backend/.env
 backend/node_modules/
+frontend/try.html
+frontend/test.html

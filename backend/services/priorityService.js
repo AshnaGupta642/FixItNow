@@ -1,7 +1,17 @@
-const calculatePriority = (issueType, upvotes = 1) => {
-  if (issueType === "water") return "HIGH";
-  if (issueType === "pothole" && upvotes >= 3) return "HIGH";
-  if (issueType === "garbage") return "MEDIUM";
+const calculatePriority = (issueType, userUrgency) => {
+  const type = (issueType || "").toLowerCase();
+  const urgency = (userUrgency || "MAINTENANCE").toUpperCase();
+
+  // High Priority Triggers
+  if (urgency === 'IMMEDIATE' || type === 'water' || type === 'structural_damage') {
+    return "HIGH";
+  }
+
+  // Medium Priority Triggers
+  if (urgency === 'MAINTENANCE' || type === 'pothole') {
+    return "MEDIUM";
+  }
+
   return "LOW";
 };
 

@@ -87,6 +87,7 @@
 //     });
 //   }
 // };
+const calculatePriority = require("../services/priorityservice");
 
 const Issue = require("../models/Issue");
 const checkDuplicate = require("../services/duplicateService");
@@ -132,7 +133,11 @@ exports.createIssue = async (req, res) => {
     fs.unlinkSync(localPath);
 
     // 4️⃣ Extract other data
-    const { latitude, longitude, street, ward, city, priority } = req.body;
+    // const { latitude, longitude, street, ward, city, priority } = req.body;
+    const { latitude, longitude, street, ward, city, userUrgency } = req.body;
+
+    const finalPriority = calculatePriority(predictedType, userUrgency);
+console.log("FINAL PRIORITY:", finalPriority);
 
     // 5️⃣ Check for duplicate
     const duplicate = await checkDuplicate(predictedType, latitude, longitude);
@@ -152,7 +157,9 @@ exports.createIssue = async (req, res) => {
       issueType: predictedType,
       location: { latitude, longitude },
       address: { street, ward, city },
-      priority: priority || "HIGH",
+      // priority: priority || "HIGH",
+      priority: finalPriority,
+
       status: "Submitted",
       department: getDepartment(predictedType),
     });
