@@ -87,7 +87,7 @@
 //     });
 //   }
 // };
-const calculatePriority = require("../services/priorityservice");
+const calculatePriority = require("../services/priorityService");
 
 const Issue = require("../models/Issue");
 const checkDuplicate = require("../services/duplicateService");
