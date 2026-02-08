@@ -76,6 +76,8 @@
 
 </main>
 
+<script src="./config.js"></script>
+
 <script>
 const token = localStorage.getItem("adminToken");
 let allIssues = []; // Global variable to store data for filtering
@@ -90,7 +92,7 @@ function logout() {
 // 1. Fetch Issues from Server
 async function loadIssues() {
   try {
-    const res = await fetch("http://localhost:5000/api/admin/issues", {
+    const res = await fetch("${API_BASE}/api/admin/issues", {
       headers: { Authorization: "Bearer " + token }
     });
     const data = await res.json();
@@ -191,7 +193,7 @@ function updateStats() {
 // 5. Update Status in Backend
 async function updateStatus(id, status) {
   try {
-    await fetch(`http://localhost:5000/api/admin/issues/${id}`, {
+    await fetch(`${API_BASE}/api/admin/issues/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
       body: JSON.stringify({ status })

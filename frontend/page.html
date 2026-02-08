@@ -124,6 +124,8 @@
   </div>
 </main>
 
+<script src="./config.js"></script>
+
 <script>
 // --- 1. GEOLOCATION LOGIC ---
 async function getLiveLocation() {
@@ -222,7 +224,7 @@ document.getElementById("issueForm").addEventListener("submit", async e => {
   formData.append("userUrgency", document.getElementById("userUrgency").value);
 
   try {
-    const res = await fetch("http://localhost:5000/api/issues/create", {
+    const res = await fetch("${API_BASE}/api/issues/create", {
       method: "POST",
       body: formData
     });

@@ -89,10 +89,12 @@
 </footer>
 
 <!-- JS -->
+ <script src="./config.js"></script>
+
 <script>
 async function loadDashboard() {
   try {
-    const res = await fetch("http://localhost:5000/api/issues");
+    const res = await fetch("${API_BASE}/api/issues");
     const data = await res.json();
 
     console.log("HOME API RESPONSE:", data); // 👈 DEBUG LINE
