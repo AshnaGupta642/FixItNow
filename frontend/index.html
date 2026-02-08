@@ -3,17 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <title>FixItNow | Home</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-slate-50 text-slate-700">
 
 <!-- NAVBAR -->
-<nav class="bg-white border-b px-8 py-4 flex justify-between items-center">
-  <div class="font-bold text-xl text-blue-600">FixItNow</div>
-  <div class="space-x-6 text-sm font-medium">
-    <a href="index.html" class="text-blue-600">Home</a>
-    <a href="page.html">Report Issue</a>
+<nav class="bg-white border-b border-slate-200 px-8 py-4 flex items-center">
+  <div class="flex items-center gap-2">
+    <div class="bg-blue-600 p-2 rounded-full">
+      <i class="fa-solid fa-city text-white text-xs"></i>
+    </div>
+    <span class="font-bold text-xl">FixItNow</span>
+  </div>
+
+  <div class="ml-10 hidden md:flex gap-8 text-sm font-medium text-slate-500">
+    <a href="#index.html" class="hover:text-blue-600">Home</a>
+    <a href="page.html" class="hover:text-blue-600">Report</a>
+    
+    
     <a href="admin-login.html">Admin</a>
   </div>
 </nav>
