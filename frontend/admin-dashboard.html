@@ -2,115 +2,211 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CityConnect | Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FixItNow | Admin Portal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); }
+  </style>
 </head>
 
-<body class="bg-slate-50 text-slate-700">
+<body class="bg-[#f8fafc] text-slate-700">
 
-<!-- NAVBAR -->
-<nav class="bg-white border-b border-slate-200 px-8 py-4 flex items-center justify-between">
-  <div class="flex items-center gap-2">
-    <div class="bg-blue-600 p-2 rounded-full">
-      <i class="fa-solid fa-city text-white text-xs"></i>
+<aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-slate-200 hidden lg:flex flex-col p-6 z-50">
+  <div class="flex items-center gap-3 mb-10">
+    <div class="bg-blue-600 p-2.5 rounded-xl shadow-lg shadow-blue-200">
+      <i class="fa-solid fa-city text-white text-sm"></i>
     </div>
-    <span class="font-bold text-xl">FixItNow</span>
-    <div class="ml-10 hidden md:flex gap-8 text-sm font-medium text-slate-500">
-    <a href="index.html" class="hover:text-blue-600">Home</a>
+    <span class="font-bold text-xl tracking-tight text-slate-900">FixItNow</span>
+  </div>
+
+  <nav class="space-y-2 flex-grow">
+    <a href="#" class="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-600 rounded-xl font-bold transition-all">
+      <i class="fa-solid fa-chart-pie"></i> Dashboard
+    </a>
+  </nav>
+
+  <button onclick="logout()" class="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 rounded-xl font-bold transition-all mt-auto">
+    <i class="fa-solid fa-right-from-bracket"></i> Logout
+  </button>
+</aside>
+
+<main class="lg:ml-64 p-4 lg:p-10">
+  
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+    <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-5">
+        <div class="h-14 w-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-xl shadow-inner"><i class="fa-solid fa-list-check"></i></div>
+        <div>
+            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Total</p>
+            <h2 id="totalCount" class="text-2xl font-black text-slate-800">0</h2>
+        </div>
+    </div>
+    <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-5">
+        <div class="h-14 w-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-xl"><i class="fa-solid fa-clock"></i></div>
+        <div>
+            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Pending</p>
+            <h2 id="pendingCount" class="text-2xl font-black text-slate-800">0</h2>
+        </div>
+    </div>
+    <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-5">
+        <div class="h-14 w-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-xl"><i class="fa-solid fa-check-double"></i></div>
+        <div>
+            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Resolved</p>
+            <h2 id="resolvedCount" class="text-2xl font-black text-slate-800">0</h2>
+        </div>
     </div>
   </div>
 
-  <button onclick="logout()"
-    class="text-sm bg-red-100 text-red-600 px-4 py-2 rounded-lg font-bold">
-    Logout
-  </button>
-</nav>
+  <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
+    <h1 class="text-3xl font-black text-slate-900 tracking-tight">Active Reports</h1>
+    
+    <div class="relative w-full md:w-96 group">
+        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors"></i>
+        <input type="text" id="searchInput" onkeyup="filterIssues()" placeholder="Search by area, pincode or type..." 
+               class="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all shadow-sm">
+    </div>
+  </div>
 
-<!-- MAIN -->
-<main class="max-w-6xl mx-auto py-12 px-4">
-
-  <h1 class="text-4xl font-extrabold text-slate-900 mb-2">
-    Admin Dashboard
-  </h1>
-  <p class="text-slate-500 mb-8">
-    Manage reported city issues
-  </p>
-
-  <div id="issues"
-    class="grid md:grid-cols-2 gap-6">
+  <div id="issues" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+    <div class="col-span-full py-20 text-center"><i class="fa-solid fa-circle-notch animate-spin text-3xl text-blue-600"></i></div>
   </div>
 
 </main>
 
 <script>
 const token = localStorage.getItem("adminToken");
-if (!token) {
-  window.location.href = "admin-login.html";
-}
+let allIssues = []; // Global variable to store data for filtering
+
+if (!token) window.location.href = "admin-login.html";
 
 function logout() {
   localStorage.removeItem("adminToken");
   window.location.href = "admin-login.html";
 }
 
-fetch("http://localhost:5000/api/admin/issues", {
-  headers: {
-    Authorization: "Bearer " + token
+// 1. Fetch Issues from Server
+async function loadIssues() {
+  try {
+    const res = await fetch("http://localhost:5000/api/admin/issues", {
+      headers: { Authorization: "Bearer " + token }
+    });
+    const data = await res.json();
+    allIssues = data.issues || [];
+    
+    updateStats();
+    renderIssues(allIssues);
+  } catch (err) {
+    console.error("Error loading issues:", err);
   }
-})
-.then(res => res.json())
-.then(data => {
+}
+
+// 2. Render Issues to UI
+function renderIssues(issuesToDisplay) {
   const container = document.getElementById("issues");
-  container.innerHTML = data.issues.map(issue => `
-    <div class="bg-white rounded-2xl shadow p-6 flex flex-col gap-4">
 
-      <img src="${issue.imageUrl}" 
-           class="w-full h-40 object-cover rounded-xl" />
+  if (issuesToDisplay.length === 0) {
+    container.innerHTML = `<div class="col-span-full py-20 text-center text-slate-400">No matching reports found.</div>`;
+    return;
+  }
 
-      <div>
-        <h3 class="font-bold text-lg capitalize">${issue.issueType}</h3>
-        <p class="text-sm text-slate-500">
-          ${issue.address?.street || "Unknown Street"},
-  ${issue.address?.ward || "Unknown Ward"}
-        </p>
+  container.innerHTML = issuesToDisplay.map(issue => `
+    <div class="bg-white rounded-[2.5rem] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 overflow-hidden border border-slate-100 flex flex-col group">
+      
+      <div class="relative h-52 overflow-hidden">
+        <img src="${issue.imageUrl}" 
+             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+             onerror="this.src='https://via.placeholder.com/400x300?text=No+Image'" />
+        <div class="absolute top-4 right-4">
+          <span class="px-3 py-1.5 rounded-xl text-[10px] font-black glass">
+            #${issue._id.slice(-5)}
+          </span>
+        </div>
       </div>
 
-      <div class="flex justify-between items-center">
-        <span class="text-xs font-bold px-3 py-1 rounded-full
-          ${issue.priority === "HIGH" ? "bg-red-100 text-red-600" :
-            issue.priority === "MEDIUM" ? "bg-yellow-100 text-yellow-600" :
-            "bg-green-100 text-green-600"}">
-          ${issue.priority}
-        </span>
+      <div class="p-7 flex flex-col flex-grow">
+        <div class="mb-5">
+          <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest block">
+            ${issue.issueType || "General"}
+          </span>
 
-        <select onchange="updateStatus('${issue._id}', this.value)"
-          class="text-sm border rounded-lg px-2 py-1">
-          <option ${issue.status === "Pending" && "selected"}>Pending</option>
-          <option ${issue.status === "In Progress" && "selected"}>In Progress</option>
-          <option ${issue.status === "Resolved" && "selected"}>Resolved</option>
-        </select>
+          <div class="flex items-start gap-2">
+            <i class="fa-solid fa-location-dot mt-1 text-slate-300"></i>
+            <p class="text-slate-800 font-bold leading-snug">
+              ${issue.address?.street || "Unknown Street"}<br>
+              <span class="text-slate-400 text-sm font-semibold">
+                ${issue.address?.ward || "Unknown Ward"},
+                ${issue.address?.city || ""}
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-auto flex items-center justify-between pt-5 border-t">
+          <span class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase
+            ${issue.priority === "HIGH" ? "bg-red-500 text-white" :
+              issue.priority === "MEDIUM" ? "bg-amber-400 text-white" :
+              "bg-emerald-500 text-white"}">
+            ${issue.priority}
+          </span>
+
+          <select onchange="updateStatus('${issue._id}', this.value)"
+            class="text-xs font-bold bg-slate-100 rounded-xl px-3 py-2.5">
+            <option value="Pending" ${issue.status === "Pending" ? "selected" : ""}>Pending</option>
+            <option value="In Progress" ${issue.status === "In Progress" ? "selected" : ""}>Working</option>
+            <option value="Resolved" ${issue.status === "Resolved" ? "selected" : ""}>Fixed</option>
+          </select>
+        </div>
       </div>
-
     </div>
   `).join("");
-});
-function updateStatus(id, status) {
-  fetch(`http://localhost:5000/api/admin/issues/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token
-    },
-    body: JSON.stringify({ status })
-  })
-  .then(res => res.json())
-  .then(() => alert("Status updated ✅"))
-  .catch(() => alert("Error updating status ❌"));
+}
+
+// 3. WORKING FILTER LOGIC
+function filterIssues() {
+  const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+
+  const filtered = allIssues.filter(issue => {
+    return (
+      issue.issueType?.toLowerCase().includes(searchTerm) ||
+      issue.address?.street?.toLowerCase().includes(searchTerm) ||
+      issue.address?.ward?.toLowerCase().includes(searchTerm) ||
+      issue.address?.city?.toLowerCase().includes(searchTerm)
+    );
+  });
+
+  renderIssues(filtered);
 }
 
 
-</script>
+// 4. Update Stats Counts
+function updateStats() {
+  document.getElementById("totalCount").innerText = allIssues.length;
+  document.getElementById("pendingCount").innerText = allIssues.filter(i => i.status === 'Pending').length;
+  document.getElementById("resolvedCount").innerText = allIssues.filter(i => i.status === 'Resolved').length;
+}
 
+// 5. Update Status in Backend
+async function updateStatus(id, status) {
+  try {
+    await fetch(`http://localhost:5000/api/admin/issues/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+      body: JSON.stringify({ status })
+    });
+    // Update local data so filter/stats stay correct without refreshing
+    const issue = allIssues.find(i => i._id === id);
+    if(issue) issue.status = status;
+    updateStats();
+  } catch (err) {
+    alert("Update failed!");
+  }
+}
+
+// Initial Load
+loadIssues();
+</script>
 </body>
 </html>
